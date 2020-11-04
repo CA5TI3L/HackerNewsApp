@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment'
 import { Story } from "../models/story";
 import { Comment } from "../models/comment";
 import { User } from "../models/user";
-import { Observable, range } from 'rxjs';
+import { Observable, range, of } from 'rxjs';
 import { map, mergeAll, toArray, filter } from 'rxjs/operators';
 
 @Injectable({
@@ -18,19 +18,31 @@ export class NewsReaderService {
     return this._httpCaller.get<String[]>(`${environment.apiUrl}/topstories.json`);
   }
 
-  getStory(storyId: string): Observable<Story> {
+  getStory(storyId: String): Observable<Story> {
     return this._httpCaller.get<Story>(`${environment.apiUrl}/item/${storyId}.json`);
   }
 
-  getComments(comments: string[]): Comment[] {
+  getStories(storyList: String[]): Observable<Story[]> {
+    var listOfStories: Story[] = new Array();
+    storyList.forEach(storyId => {
+     this._httpCaller.get<Story>(`${environment.apiUrl}/item/${storyId}.json`).pipe(
+        map(response => response)   // users array [Object, Object, Object]
+      )
+      .subscribe(story => listOfStories.push(story));
+    });
+
+    return of(listOfStories);  
+  }
+
+  getComments(comments: String[]): Observable<Comment[]> {
     var listOfComments: Comment[] = new Array();
-    comments.forEach(element => {
-      this._httpCaller.get<Comment>(`${environment.apiUrl}/item/${element}.json`).pipe(
+    comments.forEach(commentId => {
+      this._httpCaller.get<Comment>(`${environment.apiUrl}/item/${commentId}.json`).pipe(
         map(response => response)   // users array [Object, Object, Object]
       )
       .subscribe(comment => listOfComments.push(comment));
     });
-    return listOfComments;
+    return of(listOfComments);
   }
 
   getUser(userId: string): Observable<User> {
