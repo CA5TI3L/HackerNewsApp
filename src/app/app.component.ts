@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NzButtonSize } from 'ng-zorro-antd/button/button.component';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'HackerNewsApp';
+  size: NzButtonSize = 'large';
 }
