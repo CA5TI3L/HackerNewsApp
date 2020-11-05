@@ -1,0 +1,26 @@
+<div id="loadingContainer" *ngIf="(loader$ | async)">
+    <div class="loadingio-spinner-dual-ball-4qwjpd9nn83"><div class="ldio-copu27z4uit">
+      <div>
+    
+      </div>
+      <div>
+    
+      </div>
+      <div>
+    
+      </div>
+      </div>
+    </div>
+</div>
+
+<div class="topContainer" *ngIf="!(loader$ | async)">
+    <h3 nz-typography>User: {{ (user$ | async)?.id }}</h3>
+    <h3 nz-typography *ngIf="(user$ | async)?.about">about: {{ (user$ | async)?.about }}</h3>
+    <h3 nz-typography *ngIf="!(user$ | async)?.about">about: N/A</h3>
+    <h3 nz-typography *ngIf="(user$ | async)?.created">created: {{ (user$ | async)?.created | date }}</h3>
+    <h3 nz-typography *ngIf="!(user$ | async)?.created">created: N/A</h3>
+    <h3 nz-typography *ngIf="(user$ | async)?.delay">delay: {{ (user$ | async)?.delay }}</h3>
+    <h3 nz-typography *ngIf="!(user$ | async)?.delay">delay: N/A</h3>
+    <h3 nz-typography *ngIf="(user$ | async)?.karma">karma: {{ (user$ | async)?.karma }}</h3>
+    <h3 nz-typography *ngIf="!(user$ | async)?.karma">karma: N/A</h3>
+</div>
