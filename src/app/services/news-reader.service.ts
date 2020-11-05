@@ -31,7 +31,11 @@ export class NewsReaderService {
       .subscribe(story => listOfStories.push(story));
     });
 
-    return of(listOfStories);  
+    return of(listOfStories);   
+  }
+
+  getComment(commentId: String): Observable<Comment> {
+    return this._httpCaller.get<Comment>(`${environment.apiUrl}/item/${commentId}.json`);
   }
 
   getComments(comments: String[]): Observable<Comment[]> {
@@ -45,7 +49,7 @@ export class NewsReaderService {
     return of(listOfComments);
   }
 
-  getUser(userId: string): Observable<User> {
-    return this._httpCaller.get<User>(`${environment.apiUrl}/item/${userId}.json`);
+  getUser(userId: String): Observable<User> {
+    return this._httpCaller.get<User>(`${environment.apiUrl}/user/${userId}.json`);
   }
 }

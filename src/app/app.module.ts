@@ -18,6 +18,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { NewsEffects } from './store/effects/news.effects';
 import * as fromNews from './store/reducers/news.reducer';
 import { reducer } from './store/reducers/news.reducer';
+import { TopStoriesComponent } from './components/top-stories/top-stories.component';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { StoryDetailsComponent } from './components/story-details/story-details.component';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { UserComponent } from './components/user/user.component';
 
 registerLocaleData(en);
 
@@ -31,7 +36,10 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TopStoriesComponent,
+    StoryDetailsComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +52,9 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
     NzIconModule,
     NzTypographyModule,
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([NewsEffects])
+    EffectsModule.forFeature([NewsEffects]),
+    NzProgressModule,
+    NzCommentModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

@@ -28,17 +28,24 @@ export class NewsEffects {
 
   loadStories$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.getStories),
-    mergeMap((action) => this.newsService.getStories(action.storyList)
+    mergeMap((action) => { 
+       if (action?.storyIds.length === 0) {
+          return EMPTY;
+       }
+       return this.newsService.getStory(action.storyIds[0])
       .pipe(
-        map(response => { 
-        return fromActions.getStoriesComplete({ stories: response});
+        map(response => {
+          if (action?.storyIds.length === 1) {
+            return fromActions.getStoriesComplete({ stories: [...action.stories, response]});
+          } 
+           return fromActions.getStories({ storyIds: action.storyIds.slice(1), stories: [...action.stories, response]});
         }),
         catchError(err => {
           console.error(err);
           return EMPTY;
         })
         )
-      )
+      })
     )
   );
 
@@ -47,7 +54,7 @@ export class NewsEffects {
     mergeMap(() => this.newsService.getTopStories()
       .pipe(
         map(response => { 
-        return fromActions.getTopStoriesComplete({ topStories: response});
+          return fromActions.getTopStoriesComplete({ topStories: response});
         }),
         catchError(err => {
           console.error(err);
@@ -60,17 +67,24 @@ export class NewsEffects {
 
   loadComments$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.getComments),
-    mergeMap((action) => this.newsService.getComments(action.comments)
-      .pipe(
+    mergeMap((action) => {
+      if (action?.commentIds.length === 0) {
+        return EMPTY;
+     }
+     return this.newsService.getComment(action.commentIds[0])
+    .pipe(
         map(response => { 
-        return fromActions.getCommentsComplete({ comments: response});
+          if (action?.commentIds.length === 1) {
+            return fromActions.getCommentsComplete({ comments : [...action.comments, response]});
+          } 
+           return fromActions.getComments({ commentIds: action.commentIds.slice(1), comments: [...action.comments, response]});
         }),
         catchError(err => {
           console.error(err);
           return EMPTY;
         })
         )
-      )
+      })
     )
   );
 

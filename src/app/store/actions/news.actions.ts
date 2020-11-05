@@ -8,7 +8,7 @@ export const getTopStories = createAction(
 );
 
 export const getTopStoriesComplete = createAction(
-  '[News] getTopStories',
+  '[News] getTopStoriesComplete',
    props<{ topStories: String[] }>()
 );
 
@@ -24,7 +24,7 @@ export const getStoryComplete = createAction(
 
 export const getStories = createAction(
   '[News] getStories',
-    props<{ storyList: String[] }>()
+    props<{ storyIds: String[], stories: Story[] }>(),
 );
 
 export const getStoriesComplete = createAction(
@@ -32,9 +32,19 @@ export const getStoriesComplete = createAction(
    props<{ stories: Story[] }>()
 );
 
+export const getComment = createAction(
+  '[News] getComment',
+    props<{ commentId: String }>()
+);
+
+export const getCommentComplete = createAction(
+  '[News] getCommentComplete',
+   props<{ comment: Comment }>()
+);
+
 export const getComments = createAction(
   '[News] getComments',
-   props<{ comments: String[] }>()
+   props<{ commentIds: String[], comments: Comment[] }>()
 );
 
 export const getCommentsComplete = createAction(
@@ -44,10 +54,10 @@ export const getCommentsComplete = createAction(
 
 export const getUser = createAction(
   '[News] getUser',
-   props<{ userId: string }>()
+   props<{ userId: String }>()
 );
 
 export const getUserComplete = createAction(
-  '[News] getCommentsComplete',
+  '[News] getUserComplete',
    props<{ user: User }>()
 );

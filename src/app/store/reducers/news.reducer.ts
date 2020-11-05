@@ -10,6 +10,7 @@ export const newsFeatureKey = 'news';
 export interface NewsState {
   isLoading: boolean;
   Story: Story;
+  Comment: Comment;
   Stories: Story[];
   User: User;
   Comments: Comment[];
@@ -19,6 +20,7 @@ export interface NewsState {
 export const initialState: NewsState = {
   isLoading: false,
   Story: {} as Story,
+  Comment: {} as Comment,
   Stories: [],
   User: {} as User,
   Comments: [],
@@ -35,7 +37,7 @@ export const Newsreducer = createReducer(
   on(Actions.getStoryComplete, (state, { story }) => ({
     ...state,
     isLoading: false,
-    story: story
+    Story: story
   })),
   on(Actions.getTopStories, state => ({
     ...state,
@@ -46,14 +48,24 @@ export const Newsreducer = createReducer(
     isLoading: false,
     TopStories: [...topStories]
   })),
-  on(Actions.getStories, state => ({
+  on(Actions.getStories, (state, { stories }) => ({
     ...state,
-    isLoading: true
+    isLoading: true,
+    Stories: stories
   })),
   on(Actions.getStoriesComplete, (state, { stories }) => ({
     ...state,
     isLoading: false,
     Stories: [...stories]
+  })),
+  on(Actions.getComment, state => ({
+    ...state,
+    isLoading: true
+  })),
+  on(Actions.getCommentComplete, (state, { comment }) => ({
+    ...state,
+    isLoading: false,
+    Comment: comment
   })),
   on(Actions.getComments, state => ({
     ...state,
