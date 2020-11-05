@@ -1,0 +1,6 @@
+<nz-progress [nzPercent]="(stories$ | async).length*100/topStoriesCount || 0" [nzShowInfo]="false"></nz-progress>
+<div class="cardContainer">
+    <div [routerLink]="['/item', story.id]" class="card" *ngFor="let story of (stories$ | async)">
+        <p>{{story.title}}</p>
+    </div>
+</div>
