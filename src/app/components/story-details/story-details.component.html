@@ -1,0 +1,43 @@
+<div id="loadingContainer" *ngIf="(loader$ | async)">
+    <div class="loadingio-spinner-dual-ball-4qwjpd9nn83"><div class="ldio-copu27z4uit">
+      <div>
+    
+      </div>
+      <div>
+    
+      </div>
+      <div>
+    
+      </div>
+      </div>
+    </div>
+</div>
+
+<ng-container *ngIf="!(loader$ | async)">
+    <div id="item">
+        <div class="containerTop">
+            <h3 nz-typography>Story title: {{ (story$ | async)?.title }}</h3>
+            <h3 nz-typography>Story URL: <a href="(story$ | async)?.url" target="_blank">{{ (story$ | async)?.url }}</a></h3>
+            <h3 nz-typography>Story author: <a [routerLink]="['/user', (story$ | async)?.by]">{{ (story$ | async)?.by }}</a></h3>
+        </div>
+        <div class="container" *ngFor="let comment of (comments$ | async)">
+            <nz-comment nzAuthor="comment.by" [nzDatetime]="comment.time | date">
+                <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+                <nz-comment-content>
+                  <p>
+                    {{comment.text}}
+                  </p>
+                </nz-comment-content>
+                <nz-comment-action>
+                  <i nz-tooltip nzTitle="Like" nz-icon nzType="like" [nzTheme]="likes > 0 ? 'twotone' : 'outline'" (click)="like()"></i>
+                  <span class="count like">{{ likes }}</span>
+                </nz-comment-action>
+                <nz-comment-action>
+                  <i nz-tooltip nzTitle="Dislike" nz-icon nzType="dislike" [nzTheme]="dislikes > 0 ? 'twotone' : 'outline'" (click)="dislike()"></i>
+                  <span class="count dislike">{{ dislikes }}</span>
+                </nz-comment-action>
+                <nz-comment-action>Reply to</nz-comment-action>
+              </nz-comment>
+        </div>
+    </div>
+</ng-container>
